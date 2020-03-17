@@ -2,13 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
-const generateRandomnBetween = (min, max, exclude) => {
+import DefaultStyles from '../constants/default-styles';
+
+const generateRandomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   const rndNum  = Math.floor(Math.random() * (max - min)) + min;
 
   if(rndNum === exclude) {
-    return generateRandomnBetween(min, max, exclude);
+    return generateRandomBetween(min, max, exclude);
   } else {
     return rndNum;
   }
@@ -16,7 +18,7 @@ const generateRandomnBetween = (min, max, exclude) => {
 
 const GameScreen = props => {
   const [currentGuess, setCurrentGuess] = useState(
-    generateRandomnBetween(1, 100, props.userChoice)
+    generateRandomBetween(1, 100, props.userChoice)
   );
 
   const [rounds, setRounds] = useState(0);
@@ -43,14 +45,14 @@ const GameScreen = props => {
     }else {
       currentLow.current = currentGuess;
     }
-    const nextNumber = generateRandomnBetween(currentLow.current, currentHigh.current, currentGuess);
+    const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess);
       setCurrentGuess(nextNumber);
       setRounds(curRounds => curRounds + 1);
   };
 
   return (
     <View style={styles.screen}>
-      <Text>Opponent's Guess</Text>
+      <Text style={DefaultStyles.title}>Opponent's Guess</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
